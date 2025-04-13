@@ -1,13 +1,11 @@
 from typing import TypeVar, Generic, Sequence
 
 from sqlalchemy.exc import NoResultFound
-from sqlalchemy import ForeignKey, ARRAY, String
-
 from sqlalchemy.orm import Mapped, selectinload, load_only
 from sqlalchemy.sql import select, update as sqlalchemy_update
 
-from core.psql import async_db_session, Base
 from db.models.mapped_columns import *
+from core.psql import async_db_session, Base
 
 
 T = TypeVar("T")
@@ -137,8 +135,8 @@ class ModelAdmin(Generic[T]):
             return result.scalars().all()
 
 
-class User(Base, ModelAdmin):
-    __tablename__ = 'users'
+class UserTopics(Base, ModelAdmin):
+    __tablename__ = 'user_topics'
 
     id: Mapped[intpk]
     tg_id: Mapped[int | None] = mapped_column(
@@ -146,4 +144,15 @@ class User(Base, ModelAdmin):
         unique=True,
         index=True
     )
-    email: Mapped[str]
+    thread_id: Mapped[int | None] = mapped_column(
+        BigInteger,  # BigInteger для ID топика
+        nullable=True
+    )
+    username: Mapped[str | None] = mapped_column(
+        str_32,
+        nullable=True
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=text("TIMEZONE('Europe/Moscow', NOW())")
+    )
