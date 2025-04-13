@@ -1,31 +1,13 @@
-from datetime import datetime
-from typing import Annotated
-
-from sqlalchemy import BigInteger, DateTime, text
+from sqlalchemy import Integer, BigInteger, DateTime, String, text
 from sqlalchemy.orm import mapped_column
 
-intpk = Annotated[
-    int,
-    mapped_column(primary_key=True)
-]
+# Определение столбцов без использования Annotated
+intpk = mapped_column(Integer, primary_key=True)
+unique_big_int = mapped_column(BigInteger, unique=True)
+created_at = mapped_column(DateTime(timezone=True), server_default=text("TIMEZONE('Europe/Moscow', NOW())"))
 
-unique_big_int = Annotated[
-    int,
-    mapped_column(
-        BigInteger,
-        unique=True
-    )
-]
-
-created_at = Annotated[
-    datetime,
-    mapped_column(
-        DateTime(timezone=True),
-        server_default=text("TIMEZONE('Europe/Moscow', NOW())")
-    )
-]
-
-str_3 = Annotated[str, 3]
-str_32 = Annotated[str, 32]
-str_140 = Annotated[str, 140]
-str_240 = Annotated[str, 240]
+# Для строковых столбцов с ограничениями
+str_3 = mapped_column(String(3))
+str_32 = mapped_column(String(32))
+str_140 = mapped_column(String(140))
+str_240 = mapped_column(String(240))

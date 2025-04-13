@@ -138,21 +138,11 @@ class ModelAdmin(Generic[T]):
 class UserTopics(Base, ModelAdmin):
     __tablename__ = 'user_topics'
 
-    id: Mapped[intpk]
-    tg_id: Mapped[int | None] = mapped_column(
-        BigInteger,
-        unique=True,
-        index=True
-    )
-    thread_id: Mapped[int | None] = mapped_column(
-        BigInteger,  # BigInteger для ID топика
-        nullable=True
-    )
-    username: Mapped[str | None] = mapped_column(
-        str_32,
-        nullable=True
-    )
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True),
-        server_default=text("TIMEZONE('Europe/Moscow', NOW())")
-    )
+    id = mapped_column(Integer, primary_key=True)  
+    tg_id = mapped_column(BigInteger, unique=True, index=True)
+    thread_id = mapped_column(BigInteger, nullable=True)
+    username = mapped_column(String(32), nullable=True) 
+    created_at = mapped_column(DateTime(timezone=True), server_default=text("TIMEZONE('Europe/Moscow', NOW())"))
+
+    def __str__(self):
+        return f"UserTopics(tg_id={self.tg_id}, thread_id={self.thread_id}, username={self.username})"
