@@ -1,0 +1,9 @@
+# Bot
+aiogram
+# Postgres
+SQLAlchemy
+asyncpg
+# Config
+pydantic-settings
+# Another
+pydantic
