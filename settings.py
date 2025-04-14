@@ -1,3 +1,4 @@
+from aiogram.types import BotCommand
 from pydantic_settings import BaseSettings
 
 
@@ -21,6 +22,12 @@ class PostgresConfig(BaseSettings):
 class BotConfig(BaseSettings):
     TOKEN: str
     ADMINS: list[int] | None = []
+    COMMANDS: list[BotCommand] = [
+        BotCommand(
+            command='start',
+            description='Запустить бота 🚀' 
+        )
+    ]
 
     class Config:
         env_prefix = 'BOT_'

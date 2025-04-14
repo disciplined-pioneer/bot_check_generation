@@ -1,10 +1,14 @@
 import logging
 import asyncio
 from aiogram import Dispatcher
+from aiogram.types import BotCommandScopeDefault
 
 from core.bot import bot
 from bot.handlers import routers
+
+from settings import settings
 from db.crud.base import init_postgres
+
 
 logging.basicConfig(level=logging.INFO)
 
@@ -14,6 +18,10 @@ dp.include_routers(*routers)
 
 async def main():
     await init_postgres()
+    await bot.set_my_commands(
+        commands=settings.bot.COMMANDS,
+        scope=BotCommandScopeDefault()
+    )
     await dp.start_polling(bot)
 
 

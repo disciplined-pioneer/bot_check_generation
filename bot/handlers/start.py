@@ -5,6 +5,9 @@ from aiogram.filters import Command
 from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
 
+from bot.keyboards.start import *
+from bot.templates.start import *
+
 
 router = Router()
 
@@ -22,5 +25,5 @@ async def cmd_start(message: Message, state: FSMContext):
     except Exception:
         pass
     
-    await message.answer(text='Стартовое сообщение!')
+    await message.answer(text=starting_message, reply_markup=start_keyboard)
     
