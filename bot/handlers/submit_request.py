@@ -10,7 +10,7 @@ router = Router()
 async def show_price_list(callback: types.CallbackQuery):
 
     # Если нет заявки
-    result = False
+    result = True
     if not result:
         await callback.message.edit_text(
             text=already_sent_message,
@@ -18,10 +18,11 @@ async def show_price_list(callback: types.CallbackQuery):
         )
         return
     
-    # Если есть заявка
-    await create_topic()
+    # Сообщение пользователю
+    topic_id = await create_topic(callback.from_user)
     await callback.message.edit_text(
         text=success_message,
         reply_markup=None
     )
+
     await callback.answer()

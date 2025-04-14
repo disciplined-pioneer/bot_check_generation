@@ -140,8 +140,7 @@ class UserTopics(Base, ModelAdmin):
 
     id = mapped_column(Integer, primary_key=True)  
     tg_id = mapped_column(BigInteger, unique=True, index=True)
-    thread_id = mapped_column(BigInteger, nullable=True)
-    username = mapped_column(String(32), nullable=True) 
+    topic_id = mapped_column(BigInteger, nullable=True)
     created_at = mapped_column(DateTime(timezone=True), server_default=text("TIMEZONE('Europe/Moscow', NOW())"))
 
     def __str__(self):
