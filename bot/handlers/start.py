@@ -1,4 +1,4 @@
-from aiogram import Router, F
+from aiogram import Router, F, types
 from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery
 from aiogram.fsm.context import FSMContext
@@ -11,29 +11,23 @@ from bot.templates.start import *
 router = Router()
 
 
-# Обработка входящих сообщений и "Назад" к старту
+# Обработка входящих сообщений
 @router.message(Command("start", ignore_case=True))
-@router.callback_query(F.data == "back_start")
-async def cmd_start(message: Message | CallbackQuery, state: FSMContext):
+async def cmd_start(message: Message, state: FSMContext):
 
     # Удаляем всю историю сообщений
     data = await state.get_data()
-    
-    if isinstance(message, Message):
-        report_id = data["report"] if 'report' in data else message.message_id - 90
-        try:
-            await bot.delete_messages(message.chat.id,
-                                      list(range(max(1, message.message_id - 90, report_id + 1), message.message_id + 1)))
-        except Exception:
-            pass
-        await message.answer(text=starting_message, reply_markup=start_keyboard)
+    report_id = data["report"] if 'report' in data else message.message_id - 90
+    try:
+        await bot.delete_messages(message.chat.id,
+                                    list(range(max(1, message.message_id - 90, report_id + 1), message.message_id + 1)))
+    except Exception:
+        pass
 
-    elif isinstance(message, CallbackQuery):
-        # Если это CallbackQuery, то мы получаем сообщение через callback.message
-        report_id = data["report"] if 'report' in data else message.message.message_id - 90
-        try:
-            await bot.delete_messages(message.message.chat.id,
-                                      list(range(max(1, message.message.message_id - 90, report_id + 1), message.message.message_id + 1)))
-        except Exception:
-            pass
-        await message.message.edit_text(text=starting_message, reply_markup=start_keyboard)
+    await message.answer(text=starting_message, reply_markup=start_keyboard)
+        
+
+# Обработка кнопки "Назад" к старту
+@router.callback_query(F.data == "back_start")
+async def back_to_start(callback: types.CallbackQuery):
+    await callback.message.edit_text(text=starting_message, reply_markup=start_keyboard)
