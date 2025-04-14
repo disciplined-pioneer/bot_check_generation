@@ -3,7 +3,9 @@ from aiogram import Router, F, types
 from bot.templates.info_about import *
 from bot.keyboards.info_about import *
 
+
 router = Router()
+
 
 # Обрабатываем "О нас"
 @router.callback_query(F.data == "info_about_us")

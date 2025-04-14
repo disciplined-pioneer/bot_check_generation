@@ -7,7 +7,9 @@ from core.bot import bot
 from bot.keyboards.start import *
 from bot.templates.start import *
 
+
 router = Router()
+
 
 # Обработка входящих сообщений и "Назад" к старту
 @router.message(Command("start", ignore_case=True))

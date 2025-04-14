@@ -3,7 +3,9 @@ from aiogram import Router, F, types
 from bot.templates.price import *
 from bot.keyboards.price import *
 
+
 router = Router()
+
 
 # Обрабатываем "Цены"
 @router.callback_query(F.data == "price_list")

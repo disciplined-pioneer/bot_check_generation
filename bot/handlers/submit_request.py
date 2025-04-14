@@ -1,11 +1,12 @@
 from aiogram import Router, F, types
+from db.models.models import UserTopics
 
 from utils.submit_request import *
 from bot.templates.submit_request import *
 
-from db.models.models import UserTopics
 
 router = Router()
+
 
 # Обрабатываем "Оставить заявку"
 @router.callback_query(F.data == "submit_request")
