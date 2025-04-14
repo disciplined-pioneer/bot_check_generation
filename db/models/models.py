@@ -144,4 +144,14 @@ class UserTopics(Base, ModelAdmin):
     created_at = mapped_column(DateTime(timezone=True), server_default=text("TIMEZONE('Europe/Moscow', NOW())"))
 
     def __str__(self):
-        return f"UserTopics(tg_id={self.tg_id}, thread_id={self.thread_id}, username={self.username})"
+        return f"UserTopics(tg_id={self.tg_id}, topic_id={self.topic_id}, created_at={self.created_at})"
+    
+    @classmethod
+    async def get_by_tg_id(cls, tg_id: int):
+        """
+        # Возвращает данные по tg_id, если они существуют. Если нет, возвращает False.
+        :param tg_id: tg_id пользователя.
+        :return: Объект UserTopics или False, если не найдено.
+        """
+        result = await cls.get(tg_id=tg_id)
+        return result if result else False

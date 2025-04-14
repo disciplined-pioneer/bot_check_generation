@@ -3,6 +3,8 @@ from aiogram import Router, F, types
 from utils.submit_request import *
 from bot.templates.submit_request import *
 
+from db.models.models import UserTopics
+
 router = Router()
 
 # Обрабатываем "Оставить заявку"
@@ -10,18 +12,18 @@ router = Router()
 async def show_price_list(callback: types.CallbackQuery):
 
     # Если нет заявки
-    result = True
+    result = await UserTopics.get_by_tg_id(callback.from_user.id)
     if not result:
+        topic_id = await create_topic(callback.from_user)
         await callback.message.edit_text(
-            text=already_sent_message,
+            text=success_message,
             reply_markup=None
         )
         return
     
-    # Сообщение пользователю
-    topic_id = await create_topic(callback.from_user)
+    # Если есть заявка
     await callback.message.edit_text(
-        text=success_message,
+        text=already_sent_message,
         reply_markup=None
     )
 

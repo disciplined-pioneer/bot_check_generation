@@ -19,12 +19,9 @@ async def create_topic(user: str) -> int:
         chat_id=settings.bot.GROUP_ID,
         name=topic_name
     )
-
-    topic_id = topic.message_thread_id
-    print("\n\nСоздан топик:", topic.name)
-    print(f"ID топика (message_thread_id): {topic_id}\n\n")
-
+    
     # Сообщение админу
+    topic_id = topic.message_thread_id
     await bot.send_message(
         chat_id=settings.bot.GROUP_ID,
         text=f"Пользователь: {topic.name}\nID: {user.id}\n❗️ Оставил новую заявку",
@@ -35,5 +32,4 @@ async def create_topic(user: str) -> int:
     await UserTopics.create(tg_id=user.id,
                             topic_id=topic_id,
                             created_at=datetime.now())
-
     return topic_id
