@@ -1,18 +1,19 @@
-from aiogram.types import ForumTopic
 from core.bot import bot
+from settings import settings
+from aiogram.types import ForumTopic
 
 
-# Создание топика вручную через метод API
-async def create_topic():
-    chat_id = -1002622742286
-    topic_name = "Заявка от @user13"
+# Создание топика
+async def create_topic(topic_name: str) -> int:
 
     topic: ForumTopic = await bot.create_forum_topic(
-        chat_id=chat_id,
+        chat_id=settings.bot.GROUP_ID,
         name=topic_name
     )
 
     print("\n\nСоздан топик:", topic.name)
     print(f"ID топика (message_thread_id): {topic.message_thread_id}\n\n")
+
+    # Тут мы должны добавить данные в таблицу
 
     return topic.message_thread_id

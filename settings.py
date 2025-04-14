@@ -21,6 +21,7 @@ class PostgresConfig(BaseSettings):
 
 class BotConfig(BaseSettings):
     TOKEN: str
+    GROUP_ID: int
     ADMINS: list[int] | None = []
     COMMANDS: list[BotCommand] = [
         BotCommand(

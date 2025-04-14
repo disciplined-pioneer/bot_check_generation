@@ -1,4 +1,4 @@
-from aiogram import Router, F, types
+from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery
 from aiogram.fsm.context import FSMContext
@@ -9,10 +9,14 @@ from bot.templates.start import *
 
 router = Router()
 
+from test import create_topic
+
 # Обработка входящих сообщений и "Назад" к старту
 @router.message(Command("start", ignore_case=True))
 @router.callback_query(F.data == "back_start")
 async def cmd_start(message: Message | CallbackQuery, state: FSMContext):
+
+    #await create_topic()
 
     # Удаляем всю историю сообщений
     data = await state.get_data()
