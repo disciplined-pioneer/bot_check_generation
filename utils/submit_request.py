@@ -1,6 +1,9 @@
 from core.bot import bot
 from settings import settings
+from datetime import datetime
+
 from aiogram.types import ForumTopic
+from db.models.models import UserTopics
 
 
 # Создание топика
@@ -28,6 +31,9 @@ async def create_topic(user: str) -> int:
         message_thread_id=topic_id
     )
 
-    # Тут мы должны добавить данные в таблицу
+    # Добавляем информацию в таблицу
+    await UserTopics.create(tg_id=user.id,
+                            topic_id=topic_id,
+                            created_at=datetime.now())
 
     return topic_id
