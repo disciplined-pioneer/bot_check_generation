@@ -6,8 +6,8 @@ from db.models.models import UserTopics
 
 from core.bot import bot
 from utils.start import *
-from bot.keyboards.start import *
-from bot.templates.start import *
+from bot.keyboards.user.start import *
+from bot.templates.user.start import *
 
 
 router = Router()

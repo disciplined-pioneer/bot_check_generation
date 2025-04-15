@@ -3,8 +3,8 @@ from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 
 from settings import settings
-from bot.keyboards.broadcast import *
-from bot.templates.broadcast import *
+from bot.keyboards.admin.broadcast import *
+from bot.templates.admin.broadcast import *
 from db.models.models import UserTopics
 from utils.broadcast import create_url_keyboard, remove_urls
 
