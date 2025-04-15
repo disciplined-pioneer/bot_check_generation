@@ -109,13 +109,13 @@ async def handle_format_choice(callback: types.CallbackQuery, state: FSMContext)
                 print(data['content'])
                 await callback.bot.send_message(user_id, data["content"], parse_mode=data["parse_mode"], reply_markup=create_url_keyboard(data['content']))
             elif data["msg_type"] == "photo":
-                await callback.bot.send_photo(user_id, data["content"], caption=data.get("caption"), parse_mode=data["parse_mode"])
+                await callback.bot.send_photo(user_id, data["content"], caption=data.get("caption"), parse_mode=data["parse_mode"], reply_markup=create_url_keyboard(data.get("caption")))
             elif data["msg_type"] == "video":
-                await callback.bot.send_video(user_id, data["content"], caption=data.get("caption"), parse_mode=data["parse_mode"])
+                await callback.bot.send_video(user_id, data["content"], caption=data.get("caption"), parse_mode=data["parse_mode"], reply_markup=create_url_keyboard(data.get("caption")))
             elif data["msg_type"] == "audio":
-                await callback.bot.send_audio(user_id, data["content"], caption=data.get("caption"), parse_mode=data["parse_mode"])
+                await callback.bot.send_audio(user_id, data["content"], caption=data.get("caption"), parse_mode=data["parse_mode"], reply_markup=create_url_keyboard(data.get("caption")))
             elif data["msg_type"] == "document":
-                await callback.bot.send_document(user_id, data["content"], caption=data.get("caption"), parse_mode=data["parse_mode"])
+                await callback.bot.send_document(user_id, data["content"], caption=data.get("caption"), parse_mode=data["parse_mode"], reply_markup=create_url_keyboard(data.get("caption")))
         except Exception as e:
             print(f"Ошибка при отправке пользователю {user_id}: {e}")
 
