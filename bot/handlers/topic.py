@@ -1,8 +1,9 @@
 from aiogram import Router, F
-from aiogram.types import Message, InputFile
+from aiogram.types import Message
 from core.bot import bot
 from settings import settings
 from db.models.models import UserTopics
+
 
 router = Router()
 
@@ -10,6 +11,7 @@ router = Router()
 # Отправка сообщений в ЛС из топика
 @router.message(F.chat.id == settings.bot.GROUP_ID)
 async def handle_message_in_topic(message: Message):
+    
     user = message.from_user
     topic_id = message.message_thread_id
     tg_id = await UserTopics.get_topic_id_by_tg_id(topic_id)

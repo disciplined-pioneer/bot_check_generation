@@ -1,0 +1,19 @@
+from aiogram.fsm.state import State, StatesGroup
+
+class BroadcastStates(StatesGroup):
+    uploading_file = State()
+    choosing_format = State()
+    entering_caption = State()
+    confirming = State()
+
+access_denied_message = "❌ Вам отказано в доступе"
+
+broadcast_prompt_message = "Отправь текст или файл для рассылки:"
+
+choose_format_message = "Выбери форматирование: Markdown или HTML"
+
+enter_caption_message = "Введи подпись (или '-' если без подписи):"
+
+broadcast_complete_message = "✅ Ваша рассылка была завершена"
+
+broadcast_cancelled_message = "❌ Вы отмененили рассылку"
