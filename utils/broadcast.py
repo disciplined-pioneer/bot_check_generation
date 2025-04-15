@@ -9,6 +9,19 @@ def extract_urls(text: str) -> list:
     return urls
 
 
+# Удаляем все http/https ссылки
+def remove_urls(text: str) -> str:
+    
+    url_pattern = r'https?://[^\s,]+'
+    cleaned_text = re.sub(url_pattern, '', text)
+    
+    # Удаляем лишние пробелы и запятые, если они остались после удаления
+    cleaned_text = re.sub(r'\s{2,}', ' ', cleaned_text)  # двойные пробелы
+    cleaned_text = re.sub(r'\s+,', ',', cleaned_text)    # пробел перед запятой
+    cleaned_text = re.sub(r',\s+', ', ', cleaned_text)   # нормализация запятых
+    return cleaned_text.strip()
+
+
 # Получение кнопок для обработки ссылок
 def create_url_keyboard(text: str):
     urls = extract_urls(text)

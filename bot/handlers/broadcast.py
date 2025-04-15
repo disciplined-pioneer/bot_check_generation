@@ -6,7 +6,7 @@ from settings import settings
 from bot.keyboards.broadcast import *
 from bot.templates.broadcast import *
 from db.models.models import UserTopics
-from utils.broadcast import create_url_keyboard
+from utils.broadcast import create_url_keyboard, remove_urls
 
 
 router = Router()
@@ -106,16 +106,32 @@ async def handle_format_choice(callback: types.CallbackQuery, state: FSMContext)
     for user_id in user_ids:
         try:
             if data["msg_type"] == "text":
-                print(data['content'])
-                await callback.bot.send_message(user_id, data["content"], parse_mode=data["parse_mode"], reply_markup=create_url_keyboard(data['content']))
+                await callback.bot.send_message(user_id,
+                                                remove_urls(data["content"]),
+                                                parse_mode=data["parse_mode"],
+                                                reply_markup=create_url_keyboard(data['content']))
             elif data["msg_type"] == "photo":
-                await callback.bot.send_photo(user_id, data["content"], caption=data.get("caption"), parse_mode=data["parse_mode"], reply_markup=create_url_keyboard(data.get("caption")))
+                await callback.bot.send_photo(user_id, data["content"],
+                                              caption=remove_urls(data.get("caption")),
+                                              parse_mode=data["parse_mode"],
+                                              reply_markup=create_url_keyboard(data.get("caption")))
             elif data["msg_type"] == "video":
-                await callback.bot.send_video(user_id, data["content"], caption=data.get("caption"), parse_mode=data["parse_mode"], reply_markup=create_url_keyboard(data.get("caption")))
+                await callback.bot.send_video(user_id, data["content"],
+                                              caption=remove_urls(data.get("caption")),
+                                              parse_mode=data["parse_mode"],
+                                              reply_markup=create_url_keyboard(data.get("caption")))
             elif data["msg_type"] == "audio":
-                await callback.bot.send_audio(user_id, data["content"], caption=data.get("caption"), parse_mode=data["parse_mode"], reply_markup=create_url_keyboard(data.get("caption")))
+                await callback.bot.send_audio(user_id,
+                                              data["content"],
+                                              caption=remove_urls(data.get("caption")),
+                                              parse_mode=data["parse_mode"],
+                                              reply_markup=create_url_keyboard(data.get("caption")))
             elif data["msg_type"] == "document":
-                await callback.bot.send_document(user_id, data["content"], caption=data.get("caption"), parse_mode=data["parse_mode"], reply_markup=create_url_keyboard(data.get("caption")))
+                await callback.bot.send_document(user_id,
+                                                 data["content"],
+                                                 caption=remove_urls(data.get("caption")),
+                                                 parse_mode=data["parse_mode"],
+                                                 reply_markup=create_url_keyboard(data.get("caption")))
         except Exception as e:
             print(f"Ошибка при отправке пользователю {user_id}: {e}")
 
