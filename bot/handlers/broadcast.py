@@ -6,6 +6,7 @@ from settings import settings
 from bot.keyboards.broadcast import *
 from bot.templates.broadcast import *
 from db.models.models import UserTopics
+from utils.broadcast import create_url_keyboard
 
 
 router = Router()
@@ -105,7 +106,8 @@ async def handle_format_choice(callback: types.CallbackQuery, state: FSMContext)
     for user_id in user_ids:
         try:
             if data["msg_type"] == "text":
-                await callback.bot.send_message(user_id, data["content"], parse_mode=data["parse_mode"])
+                print(data['content'])
+                await callback.bot.send_message(user_id, data["content"], parse_mode=data["parse_mode"], reply_markup=create_url_keyboard(data['content']))
             elif data["msg_type"] == "photo":
                 await callback.bot.send_photo(user_id, data["content"], caption=data.get("caption"), parse_mode=data["parse_mode"])
             elif data["msg_type"] == "video":

@@ -5,9 +5,9 @@ from aiogram.fsm.context import FSMContext
 from db.models.models import UserTopics
 
 from core.bot import bot
+from utils.start import *
 from bot.keyboards.start import *
 from bot.templates.start import *
-from utils.submit_request import *
 
 
 router = Router()
