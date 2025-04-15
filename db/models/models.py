@@ -155,3 +155,11 @@ class UserTopics(Base, ModelAdmin):
         """
         result = await cls.get(tg_id=tg_id)
         return result if result else False
+    
+    @classmethod
+    async def get_topic_id_by_tg_id(cls, topic_id: int) -> int | None:
+        """
+        Возвращает tg_id по topic_id, если найден. Если не найден — возвращает None.
+        """
+        result = await cls.get(topic_id=topic_id)
+        return result.tg_id if result else None
