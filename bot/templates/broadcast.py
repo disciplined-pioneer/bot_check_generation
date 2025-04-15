@@ -14,6 +14,6 @@ choose_format_message = "Выбери форматирование: Markdown и�
 
 enter_caption_message = "Введи подпись (или '-' если без подписи):"
 
-broadcast_complete_message = "✅ Ваша рассылка была завершена"
+broadcast_complete_message = "✅ Ваш рассылка успешно завершена!"
 
 broadcast_cancelled_message = "❌ Вы отмененили рассылку"

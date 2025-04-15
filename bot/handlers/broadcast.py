@@ -30,11 +30,13 @@ async def start_broadcast(message: types.Message, state: FSMContext):
     await state.set_state(BroadcastStates.uploading_file)
     
 
+# Обрабатываем полученные данные от админа
 @router.message(BroadcastStates.uploading_file)
 async def handle_universal_input(message: types.Message, state: FSMContext):
     await message.delete()
     msg_data = {}
 
+    # Тип сообщения
     if message.text:
         msg_data = {"msg_type": "text", "content": message.text}
     elif message.photo:
@@ -65,11 +67,12 @@ async def handle_universal_input(message: types.Message, state: FSMContext):
             chat_id=message.chat.id,
             message_id=msg_id,
             text=enter_caption_message,
-            reply_markup=InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="❌ Отмена", callback_data="cancel")]])
+            reply_markup=cancel_keyboard
         )
         await state.set_state(BroadcastStates.entering_caption)
 
 
+# Выбираем тип форматирования
 @router.message(BroadcastStates.entering_caption)
 async def handle_caption(message: types.Message, state: FSMContext):
     await message.delete()
@@ -88,6 +91,7 @@ async def handle_caption(message: types.Message, state: FSMContext):
     await state.set_state(BroadcastStates.choosing_format)
 
 
+# Обработка форматирования и отправка сообщений
 @router.callback_query(lambda c: c.data.startswith("format_"))
 async def handle_format_choice(callback: types.CallbackQuery, state: FSMContext):
     format_choice = callback.data.split("_")[1]
@@ -113,6 +117,7 @@ async def handle_format_choice(callback: types.CallbackQuery, state: FSMContext)
         except Exception as e:
             print(f"Ошибка при отправке пользователю {user_id}: {e}")
 
+    # Редактируем сообщение на новое
     msg_id = data.get("last_bot_message_id")
     await callback.bot.edit_message_text(
         chat_id=callback.message.chat.id,
@@ -124,6 +129,7 @@ async def handle_format_choice(callback: types.CallbackQuery, state: FSMContext)
     await state.clear()
 
 
+# Обработка кнопки "Отмена"
 @router.callback_query(lambda c: c.data == "cancel")
 async def handle_cancel(callback: types.CallbackQuery, state: FSMContext):
     data = await state.get_data()

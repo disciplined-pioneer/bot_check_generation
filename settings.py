@@ -25,7 +25,7 @@ class BotConfig(BaseSettings):
     ADMINS: list[int] | None = []
     COMMANDS: list[BotCommand] = [
         BotCommand(command='start', description='Запустить бота 🚀'),
-        BotCommand(command='broadcast', description='Отправить сообщения')
+        BotCommand(command='broadcast', description='Рассылка сообщений 💬')
     ]
 
     class Config:
