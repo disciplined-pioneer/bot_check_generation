@@ -12,7 +12,6 @@ router = Router()
 @router.message(F.chat.id == settings.bot.GROUP_ID)
 async def handle_message_in_topic(message: Message):
 
-    print(message.from_user)
     topic_id = message.message_thread_id
     tg_id = await UserTopics.get_topic_id_by_tg_id(topic_id)
     try:
