@@ -1,10 +1,8 @@
 from aiogram.fsm.state import State, StatesGroup
 
 class BroadcastStates(StatesGroup):
-    uploading_file = State()
-    choosing_format = State()
-    entering_caption = State()
-    confirming = State()
+    waiting_for_content = State()
+    waiting_for_buttons = State()
 
 access_denied_message = "❌ Вам отказано в доступе"
 
