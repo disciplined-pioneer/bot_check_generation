@@ -49,6 +49,7 @@ def create_url_keyboard(text: str, keyboard: list[list[InlineKeyboardButton]] = 
 
 # Отправка рассылки
 async def send_preview(message: Message, content: dict, parse_mode):
+    parse_mode = parse_mode.upper()
     markup = create_url_keyboard(content["caption"], content.get("keyboard", []))
     try:
         if content["msg_type"] == "text":

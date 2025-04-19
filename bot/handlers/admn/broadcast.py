@@ -100,9 +100,8 @@ async def confirm_broadcast(callback: types.CallbackQuery, state: FSMContext):
     content = data["broadcast"]
     parse_mode = content.get("parse_mode")
 
-    if parse_mode == "Markdown":
-        parse_mode = "MarkdownV2"
-        content["caption"] = escape_markdown(content["caption"])
+    parse_mode = parse_mode
+    print(parse_mode)
 
     user_topics = await UserTopics.all()
     user_ids = [u.tg_id for u in user_topics]
