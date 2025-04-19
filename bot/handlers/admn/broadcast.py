@@ -7,7 +7,7 @@ from settings import settings
 from db.models.models import UserTopics
 from bot.keyboards.admin.broadcast import *
 from bot.templates.admin.broadcast import BroadcastStates
-from utils.broadcast import create_url_keyboard, remove_urls, send_preview, escape_markdown
+from utils.broadcast import create_url_keyboard, remove_urls, send_preview
 
 
 router = Router()
@@ -23,6 +23,7 @@ async def start_broadcast(message: types.Message, state: FSMContext):
 
     await state.set_state(BroadcastStates.waiting_for_content)
     await message.answer("📨 Отправьте сообщение для рассылки:", reply_markup=cancel_keyboard())
+
 
 
 # Обрабатыавем сообщениие админа
